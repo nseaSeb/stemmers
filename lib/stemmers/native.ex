@@ -12,7 +12,7 @@ defmodule Stemmers.Native do
   use RustlerPrecompiled,
     otp_app: :stemmers,
     crate: "stemmers",
-    base_url: "https://github.com/nseaprotector/stemmers/releases/download/v#{version}",
+    base_url: "https://github.com/nseaSeb/stemmers/releases/download/v#{version}",
     version: version,
     force_build:
       System.get_env("STEMMERS_BUILD") in ["1", "true"] or

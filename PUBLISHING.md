@@ -11,10 +11,10 @@ Prerequisites: `gh` logged in (`gh auth login`) and a Hex account
 
 ```sh
 cd stemmers
-gh repo create nseaprotector/stemmers --public --source=. --remote=origin --push
+gh repo create nseaSeb/stemmers --public --source=. --remote=origin --push
 ```
 
-(The `base_url` in `mix.exs` already points at `github.com/nseaprotector/stemmers`.)
+(The `base_url` in `mix.exs` already points at `github.com/nseaSeb/stemmers`.)
 
 ## 2. Dry-run the build matrix BEFORE tagging  ← do not skip
 

@@ -2,7 +2,7 @@ defmodule Stemmers.MixProject do
   use Mix.Project
 
   @version "0.1.0"
-  @source_url "https://github.com/nseaprotector/stemmers"
+  @source_url "https://github.com/nseaSeb/stemmers"
 
   def project do
     [
