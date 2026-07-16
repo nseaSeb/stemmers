@@ -18,13 +18,15 @@ jobs:
       fail-fast: false
       matrix:
         nif: ["2.15"]
+        # gnu (Debian/Ubuntu, incl. Fly.io's default image) + macOS. Both macOS targets
+        # build on the Apple-Silicon runner (macos-14); the deprecated macos-13 x86 runner
+        # is avoided. musl (Alpine) is intentionally deferred to 0.1.1 — `cross` v0.2.4
+        # fails to build it here; Alpine users fall back to `force_build` meanwhile.
         job:
           - { target: aarch64-apple-darwin, os: macos-14 }
-          - { target: x86_64-apple-darwin, os: macos-13 }
+          - { target: x86_64-apple-darwin, os: macos-14 }
           - { target: x86_64-unknown-linux-gnu, os: ubuntu-22.04 }
-          - { target: x86_64-unknown-linux-musl, os: ubuntu-22.04, use-cross: true }
           - { target: aarch64-unknown-linux-gnu, os: ubuntu-22.04, use-cross: true }
-          - { target: aarch64-unknown-linux-musl, os: ubuntu-22.04, use-cross: true }
 
     steps:
       - uses: actions/checkout@v4
