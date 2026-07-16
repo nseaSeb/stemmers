@@ -30,14 +30,40 @@ def deps do
 end
 ```
 
-Precompiled binaries ship for common platforms (Linux gnu/musl and macOS, x86_64 and
-aarch64), so **no Rust toolchain is required** to use the library.
+### No Rust needed on these platforms (precompiled)
 
-A Rust toolchain is only needed to build from source — either on an unsupported
-platform, or when you force it:
+Precompiled binaries ship for the platforms below, so **no Rust/cargo toolchain is
+required** — `mix deps.get` just downloads the matching binary (verified against a
+committed checksum file):
+
+| Platform | Targets |
+| --- | --- |
+| Linux (glibc — Debian/Ubuntu, **Fly.io's default image**, …) | `x86_64`, `aarch64` |
+| macOS | `x86_64` (Intel), `aarch64` (Apple Silicon) |
+
+### Everywhere else: builds from source (Rust required)
+
+On any other platform there is no prebuilt binary, so the NIF is compiled from the Rust
+source at install time — which requires a **Rust toolchain** (`rustup`/`cargo`). This
+currently includes:
+
+- **Alpine / musl** (e.g. an `*-alpine` Docker image) — precompiled musl support is
+  planned for a later release;
+- **Windows**, and any other target not listed above.
+
+The fallback is automatic (no config) when no binary matches your platform. You can also
+force a source build on a supported platform:
 
 ```sh
 STEMMERS_BUILD=1 mix deps.compile stemmers
 ```
 
-Downloads are verified against a committed checksum file.
+In a Docker build that needs the source path, add Rust to the image, e.g.:
+
+```dockerfile
+RUN apk add --no-cache build-base   # Alpine
+# then install rustup/cargo, or use a base image that already has Rust
+```
+
+> Deploying on Fly.io with the default (Debian-based) Elixir image? You're on the glibc
+> row above — nothing to install.
