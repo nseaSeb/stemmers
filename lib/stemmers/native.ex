@@ -14,6 +14,14 @@ defmodule Stemmers.Native do
     crate: "stemmers",
     base_url: "https://github.com/nseaSeb/stemmers/releases/download/v#{version}",
     version: version,
+    # The targets we actually ship binaries for (see .github/workflows/release.yml).
+    # A consumer on any other target (e.g. musl/Alpine, Windows) builds from source.
+    targets: ~w(
+      aarch64-apple-darwin
+      x86_64-apple-darwin
+      aarch64-unknown-linux-gnu
+      x86_64-unknown-linux-gnu
+    ),
     force_build:
       System.get_env("STEMMERS_BUILD") in ["1", "true"] or
         not File.exists?(Path.join(__DIR__, "../../checksum-Elixir.Stemmers.Native.exs"))

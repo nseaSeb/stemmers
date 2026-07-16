@@ -16,6 +16,9 @@ jobs:
       contents: write
     strategy:
       fail-fast: false
+      # Serialize the jobs: on a tag, each uploads to the same GitHub Release, and
+      # concurrent creation races (softprops/action-gh-release → "already_exists").
+      max-parallel: 1
       matrix:
         nif: ["2.15"]
         # gnu (Debian/Ubuntu, incl. Fly.io's default image) + macOS. Both macOS targets

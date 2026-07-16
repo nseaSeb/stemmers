@@ -51,12 +51,14 @@ currently includes:
   planned for a later release;
 - **Windows**, and any other target not listed above.
 
-The fallback is automatic (no config) when no binary matches your platform. You can also
-force a source build on a supported platform:
+On such a platform, build from source by setting the env var (a Rust toolchain must be
+present):
 
 ```sh
 STEMMERS_BUILD=1 mix deps.compile stemmers
 ```
+
+The same env var forces a source build on a supported platform if you ever need it.
 
 In a Docker build that needs the source path, add Rust to the image, e.g.:
 
