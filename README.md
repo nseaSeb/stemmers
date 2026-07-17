@@ -2,11 +2,19 @@
 
 Snowball stemming for Elixir, backed by the Rust
 [`rust-stemmers`](https://github.com/CurrySoftware/rust-stemmers) crate through a
-Rustler NIF. Unlike the pure-Elixir `stemmer` package (English only), this supports the
-full Snowball language set — **French included** — and is a maintained replacement for
-the abandoned `stemex`.
+Rustler NIF. Supports the full Snowball language set — **French included** — at roughly
+0.5µs/word.
 
-Part of the [search_ash monorepo](../).
+Part of the [search_ash monorepo](../), where it is kept as a standalone package.
+
+> **Which stemmer should you use?**
+> For most work, prefer [`text_stemmer`](https://hex.pm/packages/text_stemmer): it
+> compiles the same canonical Snowball algorithms to pure Elixir, covers more languages
+> (33 vs 18), produces **identical output**, and needs no native toolchain or
+> precompiled binary. `search_core` uses it.
+>
+> Reach for `stemmers` when throughput actually matters — it is ~20x faster per word,
+> which shows up when bulk-indexing large corpora and nowhere else.
 
 ```elixir
 Stemmers.stem("mangeant", :french)   #=> "mang"
